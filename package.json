@@ -1,52 +1,18 @@
 {
   "name": "ignition-skills",
   "version": "1.0.0",
-  "description": "Comprehensive Perspective component documentation and skills for Ignition SCADA development",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./skills/*": "./skills/*.md"
-  },
-  "files": [
-    "dist",
-    "skills",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "lint": "tsc --noEmit",
-    "validate": "tsx tests/validate.ts",
-    "prepublishOnly": "npm run build && npm run validate"
-  },
+  "description": "Perspective component documentation and skills for Ignition SCADA development",
   "keywords": [
     "ignition",
     "perspective",
     "scada",
-    "industrial-automation",
-    "hmi",
-    "component-documentation",
-    "opencode",
-    "skills"
+    "skills",
+    "opencode"
   ],
-  "author": "",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.0",
-    "tsx": "^4.7.0",
-    "@types/node": "^20.10.0"
-  }
+  "files": [
+    "skills",
+    "README.md",
+    "LICENSE"
+  ]
 }
