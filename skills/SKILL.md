@@ -1,6 +1,9 @@
-# Perspective Master Skill
+---
+name: perspective-master
+description: Master routing skill for all 85 Ignition Perspective skills. Use this to determine which skill(s) to load for your current task. Do NOT load all skills — only load the relevant ones.
+---
 
-**Purpose:** Master routing skill for all 85 Perspective skills. Use this to determine which skill(s) to load for your current task. Do NOT load all skills — only load the relevant ones.
+# Perspective Master Skill
 
 ---
 
