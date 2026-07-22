@@ -36,6 +36,7 @@ description: Master routing skill for all 85 Ignition Perspective skills. Use th
 | `perspective-css-properties` | Styling any component | `fundamentals/Perspective CSS Properties.md` |
 | `perspective-container-child-position` | Positioning children in containers | `fundamentals/Perspective Container - Child Item Position Properties.md` |
 | `perspective-create-project` | Creating a new Ignition project | `fundamentals/How to create an Ignition Project.md` |
+| `perspective-named-query` | Creating/modifying Named Queries | `fundamentals/Ignition Named Query.md` |
 
 ---
 

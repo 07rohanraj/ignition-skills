@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "perspective-master": {
+      "source": "07rohanraj/ignition-skills",
+      "sourceType": "github",
+      "skillPath": "skills/SKILL.md",
+      "computedHash": "927305f2485f0ec0a5f368d2ba3fcb7b0ff4a18d2b419fc1701a4f43312e40a1"
+    }
+  }
+}
