@@ -33,11 +33,11 @@ description: Master routing skill for all 85 Ignition Perspective skills. Use th
 | `perspective-build-view` | Creating a new view from scratch | `fundamentals/How to build a new Perspective View.md` |
 | `perspective-default-configs` | Need default JSON for any component | `fundamentals/Perspective Default Component JSON Configs.md` |
 | `perspective-component-meta` | Setting component name/visibility/tooltip | `fundamentals/Perspective Component Meta Properties.md` |
-| `perspective-css-properties` | Styling any component (inline style objects) | `fundamentals/Perspective CSS Properties.md` |
-| `perspective-stylesheet-css` | Writing stylesheet.css / style.css with correct selectors | `fundamentals/Perspective Stylesheet CSS.md` |
+| `perspective-css-properties` | Styling any component | `fundamentals/Perspective CSS Properties.md` |
 | `perspective-container-child-position` | Positioning children in containers | `fundamentals/Perspective Container - Child Item Position Properties.md` |
 | `perspective-create-project` | Creating a new Ignition project | `fundamentals/How to create an Ignition Project.md` |
 | `perspective-named-query` | Creating/modifying Named Queries | `fundamentals/Ignition Named Query.md` |
+| `perspective-docks` | Creating/configuring docks (headers, menus, sidebars) | `fundamentals/Perspective Docks.md` |
 
 ---
 
@@ -210,6 +210,7 @@ description: Master routing skill for all 85 Ignition Perspective skills. Use th
 | Transform data | `perspective-expression-transform` / `perspective-script-transform` |
 | Build responsive layout | `perspective-flex-container`, `perspective-column-container` |
 | Add navigation | `perspective-horizontal-menu`, `perspective-link`, `perspective-menu-tree` |
+| Create docks/navigation | `perspective-docks` |
 | Embed sub-views | `perspective-embedded-view`, `perspective-flex-repeater` |
 | Display alarms | `perspective-alarm-status-table` / `perspective-alarm-journal-table` |
 
