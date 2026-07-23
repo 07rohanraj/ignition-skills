@@ -174,11 +174,26 @@ com.inductiveautomation.perspective/
 ### 1. Header Dock (Top Navigation)
 
 A header dock typically contains:
-- Logo/branding
+- Logo/branding (with click event for navigation)
 - Application title
 - DateTime display
 - User information
 - Notification icons
+- **Hamburger menu icon** (opens/toggles side menu)
+
+**Custom Properties:**
+```json
+{
+  "custom": {
+    "desktop": true,       // Desktop mode flag
+    "display": "visible"   // Display state: "visible" or "hidden"
+  }
+}
+```
+
+**Event Flow:**
+1. Logo click → Script checks `desktop` flag → Toggles `display` → Navigates to page
+2. Hamburger click → `dock` event opens/toggles side menu
 
 **Basic Header Structure:**
 
@@ -281,11 +296,205 @@ A header dock typically contains:
 
 ---
 
-### 2. Menu Dock (Left Sidebar Icons)
+### 2. Menu Dock (Side Navigation)
 
-A menu dock displays icons for navigation. When clicked, it navigates to a page and optionally opens an expanded menu.
+**Default Configuration:**
+- **Position:** Left side of screen
+- **Anchor:** `fixed`
+- **Size:** `{"width": 80}` (collapsed), expands to `200` on hover
+- **Handles:** `left: "show"`, others: `"hide"`
+- **Modal:** `false` (allows interaction with main content)
+- **View Path:** `Docks/Menu`
 
-**Basic Menu Structure:**
+**Custom Properties:**
+```json
+{
+  "custom": {
+    "expanded": false   // Controls label visibility
+  }
+}
+```
+
+**Hover Expand/Collapse Behavior:**
+
+The menu uses `onMouseOver` and `onMouseOut` events on the root container to expand/collapse:
+
+```json
+{
+  "events": {
+    "dom": {
+      "onMouseOver": [
+        {
+          "config": {
+            "anchor": "fixed",
+            "autoBreakpoint": 480,
+            "content": "cover",
+            "display": "visible",
+            "handle": "hide",
+            "id": "deskMenu",
+            "modal": false,
+            "size": 200,
+            "view": "Docks/Menu"
+          },
+          "scope": "C",
+          "type": "alter-dock"
+        },
+        {
+          "config": {
+            "script": "\tself.view.custom.expanded = True"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      ],
+      "onMouseOut": [
+        {
+          "config": {
+            "anchor": "fixed",
+            "autoBreakpoint": 480,
+            "content": "cover",
+            "display": "visible",
+            "handle": "hide",
+            "id": "deskMenu",
+            "modal": true,
+            "size": 80,
+            "view": "Docks/Menu"
+          },
+          "scope": "C",
+          "type": "alter-dock"
+        },
+        {
+          "config": {
+            "script": "\tself.view.custom.expanded = False"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      ]
+    }
+  }
+}
+```
+
+**Menu Item Click Behavior:**
+
+Each icon in the menu triggers **three actions**:
+1. **Navigate** to the target page (`nav` event)
+2. **Open** the expanded menu dock (`dock` event)
+3. **Send message** to unselect other items (`script` event)
+
+```json
+{
+  "events": {
+    "dom": {
+      "onClick": [
+        {
+          "config": { "page": "/TargetPage" },
+          "scope": "C",
+          "type": "nav"
+        },
+        {
+          "config": { "id": "BigMenu", "type": "open" },
+          "scope": "C",
+          "type": "dock"
+        },
+        {
+          "config": {
+            "script": "\tsystem.perspective.sendMessage('unselect', {'selectMenu': self.meta.name})"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      ]
+    }
+  }
+}
+```
+
+**Icon Styling:**
+
+Icons use tint colors for visual feedback:
+- Default color: `#2699FB` (blue)
+- Active/selected color: `#D42C67` (red/pink)
+
+```json
+{
+  "props": {
+    "tint": {
+      "color": "#2699FB",
+      "enabled": true
+    },
+    "style": {
+      "cursor": "pointer",
+      "marginBottom": "10px",
+      "paddingLeft": "28px",
+      "paddingRight": "28px"
+    }
+  }
+}
+```
+
+**Tooltip on Hover:**
+
+Each icon has a tooltip for accessibility:
+```json
+{
+  "meta": {
+    "name": "MenuItem",
+    "tooltip": {
+      "enabled": true,
+      "location": "center-right",
+      "text": "Menu Item Label"
+    }
+  }
+}
+```
+
+**Hamburger Icon at Bottom:**
+
+The menu typically has a hamburger icon at the bottom to open the expanded menu:
+```json
+{
+  "events": {
+    "dom": {
+      "onClick": {
+        "config": { "id": "MaxDock", "type": "open" },
+        "scope": "C",
+        "type": "dock"
+      }
+    }
+  },
+  "meta": { "name": "MenuIcon" },
+  "position": { "basis": "40px", "shrink": 0 },
+  "props": {
+    "path": "material/dehaze",
+    "style": {
+      "cursor": "pointer",
+      "marginBottom": "20px",
+      "marginLeft": "22.5px",
+      "marginRight": "22.5px",
+      "marginTop": "82.5px"
+    }
+  },
+  "type": "ia.display.icon"
+}
+```
+
+**Menu Structure:**
+```
+┌─────────────┐
+│   Logo      │  ← Click navigates to home
+├─────────────┤
+│   📊 Icon   │  ← Click navigates + opens BigMenu
+│   📈 Icon   │  ← Tooltip shows on hover
+│   ⚙️ Icon   │  ← Tint color changes on selection
+│   👤 Icon   │
+├─────────────┤
+│   (spacer)  │
+├─────────────┤
+│   ☰ Hamburger│  ← Opens BigMenu (expanded menu)
+└─────────────┘
+```
 
 ```json
 {
@@ -527,6 +736,99 @@ A MenuBar dock displays categorized navigation with expandable sections. It typi
 
 ---
 
+## How the Hamburger Menu Opens the Side Menubar
+
+The hamburger menu icon (typically `material/dehaze`) in the header dock triggers a **dock event** to open the expanded side menu.
+
+### Header Dock Hamburger Behavior
+
+**Two Common Patterns:**
+
+**Pattern 1: Open Specific Dock (COP_TSDPL style)**
+```json
+{
+  "events": {
+    "dom": {
+      "onClick": {
+        "config": {
+          "id": "BigMenu",
+          "type": "open"
+        },
+        "scope": "C",
+        "type": "dock"
+      }
+    }
+  },
+  "meta": { "name": "MenuIcon" },
+  "props": {
+    "path": "material/dehaze",
+    "style": {
+      "cursor": "pointer",
+      "marginLeft": "10px"
+    }
+  },
+  "type": "ia.display.icon"
+}
+```
+
+**Pattern 2: Toggle Dock (WCS style)**
+```json
+{
+  "events": {
+    "dom": {
+      "onClick": {
+        "config": {
+          "id": "deskMenu",
+          "type": "toggle"
+        },
+        "scope": "C",
+        "type": "dock"
+      }
+    }
+  },
+  "meta": { "name": "MenuIcon" },
+  "props": {
+    "path": "material/dehaze",
+    "style": { "cursor": "pointer" }
+  },
+  "type": "ia.display.icon"
+}
+```
+
+### Header Display Mode Toggle
+
+The header also controls its own visibility mode for responsive design using **custom properties** and **script events**:
+
+```json
+{
+  "custom": {
+    "desktop": true,
+    "display": "visible"
+  }
+}
+```
+
+**Logo Click with Display Mode Toggle:**
+```json
+{
+  "events": {
+    "dom": {
+      "onClick": [
+        {
+          "config": {
+            "script": "\tif self.view.custom.desktop:\n\t\tsystem.perspective.sendMessage('show', {'header': self.view.custom.display})\n\t\tself.view.custom.display = 'visible'\n\telse:\n\t\tself.view.custom.display = 'hidden'\n\t\tsystem.perspective.sendMessage('hide', {'header': self.view.custom.display})\n\tsystem.perspective.navigate('/')"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
 ## Dock Events and Interactions
 
 ### Opening/Closing Docks
@@ -552,13 +854,13 @@ Use the `dock` event type to open, close, or toggle docks:
 
 **Dock Event Types:**
 
-| Type | Description |
-|------|-------------|
-| `"open"` | Opens the specified dock |
-| `"close"` | Closes the specified dock |
-| `"toggle"` | Toggles dock open/close state |
+| Type | Description | Use Case |
+|------|-------------|----------|
+| `"open"` | Opens the specified dock | Hamburger opens menu |
+| `"close"` | Closes the specified dock | Close button closes menu |
+| `"toggle"` | Toggles dock open/close state | Hamburger toggle behavior |
 
-**Example: Toggle between two docks:**
+**Example: Toggle between two docks (Close minDock, Open maxDock):**
 
 ```json
 {
@@ -574,6 +876,116 @@ Use the `dock` event type to open, close, or toggle docks:
           "config": { "id": "maxDock", "type": "open" },
           "scope": "C",
           "type": "dock"
+        }
+      ]
+    }
+  }
+}
+```
+
+**Example: Close expanded menu when clicking a menu item:**
+
+```json
+{
+  "events": {
+    "dom": {
+      "onClick": [
+        {
+          "config": { "page": "/targetPage" },
+          "scope": "C",
+          "type": "nav"
+        },
+        {
+          "config": { "id": "BigMenu", "type": "open" },
+          "scope": "C",
+          "type": "dock"
+        },
+        {
+          "config": {
+            "script": "\tsystem.perspective.sendMessage('unselect', {'selectMenu': self.meta.name})"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      ]
+    }
+  }
+}
+```
+
+### Alter-Dock (Dynamic Dock Modification)
+
+The `alter-dock` event type dynamically modifies dock properties at runtime:
+
+```json
+{
+  "config": {
+    "anchor": "fixed",
+    "autoBreakpoint": 480,
+    "content": "cover",
+    "display": "visible",
+    "handle": "hide",
+    "id": "deskMenu",
+    "modal": false,
+    "size": 200,
+    "view": "Docks/Menu"
+  },
+  "scope": "C",
+  "type": "alter-dock"
+}
+```
+
+**Use Case: Hover Expand/Collapse on Menu Dock:**
+```json
+{
+  "events": {
+    "dom": {
+      "onMouseOver": [
+        {
+          "config": {
+            "anchor": "fixed",
+            "autoBreakpoint": 480,
+            "content": "cover",
+            "display": "visible",
+            "handle": "hide",
+            "id": "deskMenu",
+            "modal": false,
+            "size": 200,
+            "view": "Docks/Menu"
+          },
+          "scope": "C",
+          "type": "alter-dock"
+        },
+        {
+          "config": {
+            "script": "\tself.view.custom.expanded = True"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      ],
+      "onMouseOut": [
+        {
+          "config": {
+            "anchor": "fixed",
+            "autoBreakpoint": 480,
+            "content": "cover",
+            "display": "visible",
+            "handle": "hide",
+            "id": "deskMenu",
+            "modal": true,
+            "size": 80,
+            "view": "Docks/Menu"
+          },
+          "scope": "C",
+          "type": "alter-dock"
+        },
+        {
+          "config": {
+            "script": "\tself.view.custom.expanded = False"
+          },
+          "scope": "G",
+          "type": "script"
         }
       ]
     }
@@ -658,6 +1070,60 @@ Use the `popup` event type for user popups:
 
 Message handlers allow docks to communicate with each other and respond to events.
 
+### The "unselect" Message Pattern
+
+The most common message pattern in dock navigation is the **"unselect"** message, which manages selection state across menu items.
+
+**How it works:**
+1. When a menu icon is clicked, it sends an "unselect" message with its name
+2. The Flex Repeater receives this message and updates selection state
+3. Only the clicked item remains selected; all others are deselected
+
+**Message Handler on Flex Repeater:**
+
+```json
+{
+  "scripts": {
+    "messageHandlers": [
+      {
+        "messageType": "unselect",
+        "pageScope": true,
+        "script": "selectedMenu = payload['selectMenu']\nfor item in self.props.instances:\n    for childItem in item['child']:\n        try:\n            childItem['subSelect'] = False\n        except:\n            continue\n    if item['headerLabel'] != selectedMenu:\n        item['selected'] = False\n    else:\n        if item['selected'] == True:\n            item['selected'] = False\n        else:\n            item['selected'] = True\n        system.perspective.openDock('mainDock')",
+        "sessionScope": true,
+        "viewScope": true
+      }
+    ]
+  }
+}
+```
+
+**Script Breakdown:**
+```python
+# Get the name of the clicked menu item
+selectedMenu = payload['selectMenu']
+
+# Loop through all menu categories
+for item in self.props.instances:
+    # Reset all child items' subSelect to False
+    for childItem in item['child']:
+        try:
+            childItem['subSelect'] = False
+        except:
+            continue
+    
+    # If this category is NOT the selected one, deselect it
+    if item['headerLabel'] != selectedMenu:
+        item['selected'] = False
+    else:
+        # Toggle selection state for the clicked category
+        if item['selected'] == True:
+            item['selected'] = False
+        else:
+            item['selected'] = True
+        # Open the expanded menu dock
+        system.perspective.openDock('mainDock')
+```
+
 ### Defining Message Handlers
 
 ```json
@@ -678,34 +1144,42 @@ Message handlers allow docks to communicate with each other and respond to event
 }
 ```
 
+**Scope Properties:**
+
+| Property | Description |
+|----------|-------------|
+| `pageScope` | Message is scoped to the current page |
+| `sessionScope` | Message is scoped to the entire session |
+| `viewScope` | Message is scoped to the current view |
+
 ### Sending Messages
 
 ```python
-# From a script event
-system.perspective.sendMessage("messageName", {"key": "value"})
+# From a script event - send unselect message
+system.perspective.sendMessage("unselect", {"selectMenu": self.meta.name})
+
+# From a script event - send show/hide message
+system.perspective.sendMessage("show", {"header": self.view.custom.display})
+
+# From a script event - send hide message
+system.perspective.sendMessage("hide", {"header": self.view.custom.display})
 ```
 
 ### Common Message Patterns
 
-**Selection State Management:**
-
+**Show Header:**
 ```python
-# Unselect message handler
-selectedMenu = payload['selectMenu']
-for item in self.props.instances:
-    for childItem in item['child']:
-        try:
-            childItem['subSelect'] = False
-        except:
-            continue
-    if item['headerLabel'] != selectedMenu:
-        item['selected'] = False
-    else:
-        if item['selected'] == True:
-            item['selected'] = False
-        else:
-            item['selected'] = True
-    system.perspective.openDock('maxDock')
+system.perspective.sendMessage('show', {'header': self.view.custom.display})
+```
+
+**Hide Header:**
+```python
+system.perspective.sendMessage('hide', {'header': self.view.custom.display})
+```
+
+**Unselect Menu Items:**
+```python
+system.perspective.sendMessage('unselect', {'selectMenu': self.meta.name})
 ```
 
 ---
@@ -743,11 +1217,97 @@ Each instance in the Flex Repeater has:
 }
 ```
 
+**Instance Properties Reference:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `child` | array | Array of sub-menu items |
+| `display` | boolean | Whether instance is visible |
+| `headerIcon` | string | Icon for the category header (base64 or URL) |
+| `headerLabel` | string | Label for the category header |
+| `headerTarget` | string | Navigation target for the header |
+| `selected` | boolean | Whether category is expanded/selected |
+
+**Child Item Properties:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `display` | boolean | Whether sub-item is visible |
+| `label` | string | Sub-item label text |
+| `nav` | boolean | Whether clicking navigates |
+| `path` | boolean | Whether item has a path |
+| `subSelect` | boolean | Whether sub-item is selected |
+| `target` | string | Navigation target page |
+
 ### SingleMenu View
 
 The SingleMenu view is a child view that renders each menu category. It typically contains:
 - A header container with icon and label
 - A list of sub-items that expand when selected
+
+**SingleMenu View Structure:**
+
+```json
+{
+  "custom": {},
+  "params": {
+    "child": [],
+    "display": true,
+    "headerIcon": "",
+    "headerLabel": "",
+    "headerTarget": "",
+    "selected": false
+  },
+  "propConfig": {
+    "params.child": { "paramDirection": "input" },
+    "params.display": { "paramDirection": "input" },
+    "params.headerIcon": { "paramDirection": "input" },
+    "params.headerLabel": { "paramDirection": "input" },
+    "params.headerTarget": { "paramDirection": "input" },
+    "params.selected": { "paramDirection": "input" }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": { "name": "HeaderContainer" },
+        "position": { "shrink": 0 },
+        "props": {
+          "direction": "row",
+          "style": { "padding": "10px" }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": { "name": "SubItemsContainer" },
+        "position": { "grow": 1 },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "type": "ia.container.flex"
+  }
+}
+```
+
+### Flex Repeater Configuration
+
+```json
+{
+  "meta": { "name": "FlexRepeater" },
+  "position": { "basis": "700px", "grow": 1 },
+  "props": {
+    "direction": "column",
+    "elementPosition": { "basis": "auto", "grow": 0, "shrink": 0 },
+    "instances": [...],
+    "path": "Docks/MenuBar/SingleMenu",
+    "useDefaultViewHeight": false,
+    "useDefaultViewWidth": false
+  },
+  "type": "ia.display.flex-repeater"
+}
+```
 
 ---
 
@@ -766,6 +1326,22 @@ The SingleMenu view is a child view that renders each menu category. It typicall
 6. **Thumbnail Images**: Include `thumbnail.png` files for visual identification in the Designer.
 
 7. **Default Sizes**: Set reasonable `defaultSize` values in dock views for proper rendering.
+
+8. **Hover Expand/Collapse**: Use `onMouseOver`/`onMouseOut` with `alter-dock` for menu expansion.
+
+9. **Selection State**: Use the "unselect" message pattern to manage menu item selection.
+
+10. **Icon Tinting**: Use `tint` property to visually indicate selected/active menu items.
+
+11. **Tooltip Support**: Add tooltips to icons for better accessibility and usability.
+
+12. **Event Chaining**: Chain multiple events (nav + dock + script) for complex interactions.
+
+13. **Custom Properties**: Use custom properties for state management (expanded, display, desktop).
+
+14. **Modal vs Non-Modal**: Set `modal: false` for side menus to allow main content interaction.
+
+15. **Content Mode**: Use `content: "cover"` for menus that overlay, `content: "push"` for headers.
 
 ---
 
@@ -904,3 +1480,83 @@ This example shows a complete two-dock navigation system with a collapsed menu (
 - `Perspective Link Component.md` - Navigation links
 - `Perspective Expression Binding.md` - Dynamic property binding
 - `Perspective Script Transform.md` - Data transformation
+
+---
+
+## Comparison: COP_TSDPL vs WCS Menu Approaches
+
+### COP_TSDPL Approach (Two-Dock System)
+
+**Structure:**
+- `Menu` dock (80px) - Icons only
+- `BigMenu` dock (200-300px) - Expanded menu with labels
+
+**Behavior:**
+1. Hover over Menu dock → Labels appear (uses `alter-dock` to expand)
+2. Click icon → Navigates to page + Opens BigMenu dock
+3. Click hamburger in Menu dock → Opens BigMenu dock
+4. BigMenu dock has close button that collapses back to Menu
+
+**Key Files:**
+- `views/Docks/Menu/view.json` - Icon-only menu
+- `views/Docks/BigMenu/view.json` - Expanded menu
+
+### WCS Approach (Single Dock with Hover)
+
+**Structure:**
+- `deskMenu` dock (80px default, 200px on hover)
+
+**Behavior:**
+1. Hover over dock → Expands to 200px (uses `onMouseOver` + `alter-dock`)
+2. Mouse out → Collapses to 80px (uses `onMouseOut` + `alter-dock`)
+3. Custom property `expanded` controls label visibility
+4. Uses Flex Repeater for menu items
+
+**Key Files:**
+- `views/Docks/Menu/view.json` - Single menu with hover expand
+
+### Which to Use?
+
+| Scenario | Recommended Approach |
+|----------|---------------------|
+| Need separate icon and expanded views | COP_TSDPL (Two-Dock) |
+| Simple hover expand/collapse | WCS (Single Dock) |
+| Complex menu with categories | COP_TSDPL with MenuBar |
+| Mobile-friendly design | WCS with autoBreakpoint |
+
+---
+
+## Quick Reference
+
+### Dock Event Types
+| Type | Description |
+|------|-------------|
+| `dock` | Open, close, or toggle docks |
+| `nav` | Navigate to a page |
+| `script` | Execute custom script |
+| `popup` | Open a popup window |
+| `alter-dock` | Dynamically modify dock properties |
+
+### Common Dock IDs
+| ID | Purpose |
+|----|---------|
+| `BigMenu` | Expanded menu (200-300px) |
+| `maxDock` | Maximum/expanded dock |
+| `minDock` | Minimum/collapsed dock |
+| `deskMenu` | Desktop menu dock |
+| `mainDock` | Main navigation dock |
+
+### Common Messages
+| Message | Payload | Purpose |
+|---------|---------|---------|
+| `unselect` | `{"selectMenu": "name"}` | Deselect all menu items except named |
+| `show` | `{"header": "visible"}` | Show header |
+| `hide` | `{"header": "hidden"}` | Hide header |
+
+### Dock Sizes
+| Dock Type | Typical Size |
+|-----------|--------------|
+| Header | 40-80px height |
+| Menu (collapsed) | 80px width |
+| Menu (expanded) | 200-300px width |
+| MenuBar | 250-350px width |
