@@ -317,10 +317,18 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.ia_containerFlex {
+/* Target a user-created Style Class using the .psc- prefix */
+.psc-my-global-style {
+  gap: 8px;
+}
+
+/* Override a built-in Perspective component selector (verify in DevTools) */
+.ia_containerFlexComponent {
   gap: 8px;
 }
 ```
+
+> **Note:** User-created Style Classes use the `.psc-` prefix in CSS. Built-in Perspective classes use `.ia_`. Always verify selectors in browser DevTools (`F12`) before using them. See the `perspective-stylesheet-css` skill for full details.
 
 ---
 
