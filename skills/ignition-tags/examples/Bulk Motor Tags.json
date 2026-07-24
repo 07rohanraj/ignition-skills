@@ -1,0 +1,183 @@
+{
+  "tags": [
+    {
+      "name": "Pump",
+      "tagType": "UdtType",
+      "documentation": "Pump UDT with flow, status, and control",
+      "parameters": [
+        {"name": "device", "value": "PLC1"},
+        {"name": "pumpId", "value": "Pump1"}
+      ],
+      "tags": [
+        {
+          "name": "FlowRate",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Pumps/{pumpId}/Flow",
+          "engineeringUnit": "gpm",
+          "historyEnabled": true,
+          "historyProvider": "MySQL"
+        },
+        {
+          "name": "Running",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Pumps/{pumpId}/Running",
+          "dataType": "Boolean"
+        },
+        {
+          "name": "Command",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Pumps/{pumpId}/Cmd",
+          "dataType": "Boolean"
+        }
+      ]
+    },
+    {
+      "name": "Valve",
+      "tagType": "UdtType",
+      "documentation": "Control valve with position feedback",
+      "parameters": [
+        {"name": "device", "value": "PLC1"}
+      ],
+      "tags": [
+        {
+          "name": "Command",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Valve/Cmd",
+          "dataType": "Boolean"
+        },
+        {
+          "name": "Position",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Valve/Position",
+          "engineeringUnit": "%"
+        },
+        {
+          "name": "OpenLimit",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Valve/OpenLimit",
+          "dataType": "Boolean"
+        },
+        {
+          "name": "CloseLimit",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Valve/CloseLimit",
+          "dataType": "Boolean"
+        }
+      ]
+    },
+    {
+      "name": "Tank",
+      "tagType": "UdtType",
+      "documentation": "Tank with level, temperature, and alarms",
+      "parameters": [
+        {"name": "device", "value": "PLC1"}
+      ],
+      "tags": [
+        {
+          "name": "Level",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Tank/Level",
+          "engineeringUnit": "%",
+          "historyEnabled": true,
+          "historyProvider": "MySQL"
+        },
+        {
+          "name": "Temperature",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Tank/Temp",
+          "engineeringUnit": "degF",
+          "historyEnabled": true,
+          "historyProvider": "MySQL"
+        },
+        {
+          "name": "HighLevel",
+          "tagType": "AtomicTag",
+          "valueSource": "expression",
+          "dataType": "Boolean",
+          "expression": "{[.]Level} > 90",
+          "documentation": "High level alarm at 90%"
+        },
+        {
+          "name": "LowLevel",
+          "tagType": "AtomicTag",
+          "valueSource": "expression",
+          "dataType": "Boolean",
+          "expression": "{[.]Level} < 10",
+          "documentation": "Low level alarm at 10%"
+        }
+      ]
+    },
+    {
+      "name": "Plant",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "Area1",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "name": "Pump1",
+              "tagType": "UdtInstance",
+              "typeId": "Pump",
+              "parameters": {"device": "Area1_PLC", "pumpId": "Pump1"}
+            },
+            {
+              "name": "Pump2",
+              "tagType": "UdtInstance",
+              "typeId": "Pump",
+              "parameters": {"device": "Area1_PLC", "pumpId": "Pump2"}
+            },
+            {
+              "name": "Valve1",
+              "tagType": "UdtInstance",
+              "typeId": "Valve",
+              "parameters": {"device": "Area1_PLC"}
+            },
+            {
+              "name": "Tank1",
+              "tagType": "UdtInstance",
+              "typeId": "Tank",
+              "parameters": {"device": "Area1_PLC"}
+            }
+          ]
+        },
+        {
+          "name": "Area2",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "name": "Pump1",
+              "tagType": "UdtInstance",
+              "typeId": "Pump",
+              "parameters": {"device": "Area2_PLC", "pumpId": "Pump1"}
+            },
+            {
+              "name": "Tank1",
+              "tagType": "UdtInstance",
+              "typeId": "Tank",
+              "parameters": {"device": "Area2_PLC"}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

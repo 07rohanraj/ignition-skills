@@ -1,9 +1,9 @@
 ---
-name: perspective-master
-description: Master routing skill for all 85 Ignition Perspective skills. Use this to determine which skill(s) to load for your current task. Do NOT load all skills — only load the relevant ones.
+name: ignition-skills-master
+description: Master routing skill for all Ignition skills including Perspective views and Tag management. Use this to determine which skill(s) to load for your current task. Do NOT load all skills — only load the relevant ones.
 ---
 
-# Perspective Master Skill
+# Ignition Skills Master
 
 ---
 
@@ -193,6 +193,20 @@ description: Master routing skill for all 85 Ignition Perspective skills. Use th
 
 ---
 
+## Ignition Tags (Gateway REST API)
+
+| Skill ID | When to Use | File Path |
+|----------|-------------|-----------|
+| `ignition-tags` | Master routing for tag operations | `ignition-tags/SKILL.md` |
+| `ignition-tag-memory` | Creating memory tags (setpoints, internal values) | `ignition-tags/tag-types/Memory Tag.md` |
+| `ignition-tag-expression` | Creating expression tags (calculated values) | `ignition-tags/tag-types/Expression Tag.md` |
+| `ignition-tag-opc` | Creating OPC-UA tags (PLC data) | `ignition-tags/tag-types/OPC Tag.md` |
+| `ignition-tag-query` | Creating SQL query tags (database values) | `ignition-tags/tag-types/Query Tag.md` |
+| `ignition-tag-folder` | Creating tag folders (organization) | `ignition-tags/tag-types/Folder.md` |
+| `ignition-tag-udt` | Creating UDT definitions and instances | `ignition-tags/tag-types/UDT.md` |
+
+---
+
 ## Quick Task Reference
 
 | Task | Load These Skills |
@@ -213,7 +227,17 @@ description: Master routing skill for all 85 Ignition Perspective skills. Use th
 | Create docks/navigation | `perspective-docks` |
 | Embed sub-views | `perspective-embedded-view`, `perspective-flex-repeater` |
 | Display alarms | `perspective-alarm-status-table` / `perspective-alarm-journal-table` |
+| Create memory tags | `ignition-tag-memory` |
+| Create expression tags | `ignition-tag-expression` |
+| Create OPC tags from PLC | `ignition-tag-opc` |
+| Create SQL query tags | `ignition-tag-query` |
+| Create tag folders | `ignition-tag-folder` |
+| Create UDT definitions | `ignition-tag-udt` |
+| Create UDT instances | `ignition-tag-udt` |
+| Bulk create tags | `ignition-tag-udt`, `ignition-tag-opc` |
+| Export existing tags | `ignition-tags` (scripts/export-tags.py) |
+| Import tags | `ignition-tags` (scripts/import-tags.py) |
 
 ---
 
-*This is the master skill — load only the specific skill(s) you need for your current task.*
+*This is the master skill — load only the specific skill(s) you need for your current task. For Perspective views, use the perspective-* skills. For tag management, use the ignition-tag-* skills.*

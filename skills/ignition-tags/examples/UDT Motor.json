@@ -1,0 +1,98 @@
+{
+  "tags": [
+    {
+      "name": "Motor",
+      "tagType": "UdtType",
+      "documentation": "Standard motor monitoring UDT with Amps, HOA, Running status, and Setpoint",
+      "parameters": [
+        {
+          "name": "device",
+          "value": "PLC1"
+        }
+      ],
+      "tags": [
+        {
+          "name": "Amps",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Motor/Amps",
+          "engineeringUnit": "A",
+          "historyEnabled": true,
+          "historyProvider": "MySQL"
+        },
+        {
+          "name": "HOA",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Motor/HOA",
+          "dataType": "Int4",
+          "documentation": "Hand/Off/Auto: 0=Off, 1=Hand, 2=Auto"
+        },
+        {
+          "name": "Running",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Motor/Running",
+          "dataType": "Boolean"
+        },
+        {
+          "name": "Fault",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[{device}]/Motor/Fault",
+          "dataType": "Boolean"
+        },
+        {
+          "name": "Setpoint",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Float8",
+          "value": 100.0,
+          "engineeringUnit": "%",
+          "documentation": "Speed setpoint"
+        }
+      ]
+    },
+    {
+      "name": "Motors",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "Pump1",
+          "tagType": "UdtInstance",
+          "typeId": "Motor",
+          "parameters": {
+            "device": "Pump1PLC"
+          }
+        },
+        {
+          "name": "Pump2",
+          "tagType": "UdtInstance",
+          "typeId": "Motor",
+          "parameters": {
+            "device": "Pump2PLC"
+          }
+        },
+        {
+          "name": "Fan1",
+          "tagType": "UdtInstance",
+          "typeId": "Motor",
+          "parameters": {
+            "device": "Fan1PLC"
+          },
+          "tags": [
+            {
+              "name": "Setpoint",
+              "value": 85.0,
+              "documentation": "Fan runs slower than pumps"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

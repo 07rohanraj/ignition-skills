@@ -1,0 +1,94 @@
+{
+  "tags": [
+    {
+      "name": "Setpoints",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "Temperature",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Float8",
+          "value": 100.0,
+          "engineeringUnit": "degF",
+          "documentation": "Temperature setpoint"
+        },
+        {
+          "name": "Pressure",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Float8",
+          "value": 50.0,
+          "engineeringUnit": "psi",
+          "documentation": "Pressure setpoint"
+        },
+        {
+          "name": "Enable",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Boolean",
+          "value": true,
+          "documentation": "Process enable flag"
+        }
+      ]
+    },
+    {
+      "name": "Sensors",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "Temperature",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[PLC1]Sensors/Temp",
+          "engineeringUnit": "degF",
+          "historyEnabled": true,
+          "historyProvider": "MySQL"
+        },
+        {
+          "name": "Pressure",
+          "tagType": "AtomicTag",
+          "valueSource": "opc",
+          "opcServer": "Ignition OPC UA Server",
+          "opcItemPath": "ns=1;s=[PLC1]Sensors/Pressure",
+          "engineeringUnit": "psi",
+          "historyEnabled": true,
+          "historyProvider": "MySQL"
+        }
+      ]
+    },
+    {
+      "name": "Calculated",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "TemperatureC",
+          "tagType": "AtomicTag",
+          "valueSource": "expression",
+          "dataType": "Float8",
+          "expression": "({[~]Sensors/Temperature} - 32) * 5/9",
+          "engineeringUnit": "degC",
+          "documentation": "Temperature in Celsius"
+        },
+        {
+          "name": "PressureBar",
+          "tagType": "AtomicTag",
+          "valueSource": "expression",
+          "dataType": "Float8",
+          "expression": "{[~]Sensors/Pressure} * 0.0689476",
+          "engineeringUnit": "bar",
+          "documentation": "Pressure in Bar"
+        },
+        {
+          "name": "HighTempAlarm",
+          "tagType": "AtomicTag",
+          "valueSource": "expression",
+          "dataType": "Boolean",
+          "expression": "{[~]Sensors/Temperature} > {[~]Setpoints/Temperature}",
+          "documentation": "High temperature alarm"
+        }
+      ]
+    }
+  ]
+}
