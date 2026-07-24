@@ -197,7 +197,6 @@ description: Master routing skill for all Ignition skills including Perspective 
 
 | Skill ID | When to Use | File Path |
 |----------|-------------|-----------|
-| `ignition-tags` | Master routing for tag operations | `ignition-tags/SKILL.md` |
 | `ignition-tag-memory` | Creating memory tags (setpoints, internal values) | `ignition-tags/tag-types/Memory Tag.md` |
 | `ignition-tag-expression` | Creating expression tags (calculated values) | `ignition-tags/tag-types/Expression Tag.md` |
 | `ignition-tag-opc` | Creating OPC-UA tags (PLC data) | `ignition-tags/tag-types/OPC Tag.md` |
