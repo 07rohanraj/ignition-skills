@@ -1,0 +1,5 @@
+{
+  "host": "http://localhost:8088",
+  "token": "your-api-token-here",
+  "provider": "default"
+}

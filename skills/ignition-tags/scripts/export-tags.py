@@ -6,9 +6,10 @@ Usage:
     python export-tags.py --output tags.json
     python export-tags.py --provider default --path "Motors" --output motors.json
 
-Environment Variables:
-    IGNI_HOST   - Gateway URL (e.g., http://localhost:8088)
-    IGNI_TOKEN  - API token from Gateway > Platform > Security > API Keys
+Configuration (priority: CLI args > env vars > config.json):
+    config.json  - Config file (place in scripts/ or project root)
+    IGNI_HOST    - Gateway URL (e.g., http://localhost:8088)
+    IGNI_TOKEN   - API token from Gateway > Platform > Security > API Keys
 """
 
 import os
@@ -19,19 +20,53 @@ import requests
 from pathlib import Path
 
 
+def load_config_file():
+    """Load config from config.json file."""
+    # Look for config.json in script directory, then parent, then current working directory
+    script_dir = Path(__file__).parent.parent
+    search_paths = [
+        script_dir / "config.json",
+        script_dir.parent / "config.json",
+        Path.cwd() / "config.json"
+    ]
+    
+    for config_path in search_paths:
+        if config_path.exists():
+            try:
+                with open(config_path, "r", encoding="utf-8") as f:
+                    config = json.load(f)
+                print(f"Loaded config from: {config_path}")
+                return config
+            except json.JSONDecodeError as e:
+                print(f"Warning: Invalid config file {config_path}: {e}", file=sys.stderr)
+            except Exception as e:
+                print(f"Warning: Could not read {config_path}: {e}", file=sys.stderr)
+    
+    return {}
+
+
 def get_config():
-    """Get configuration from environment variables."""
-    host = os.environ.get("IGNI_HOST")
-    token = os.environ.get("IGNI_TOKEN")
+    """Get configuration from config file, environment variables, or defaults."""
+    # Load config file
+    file_config = load_config_file()
+    
+    # Priority: environment variables > config file
+    host = os.environ.get("IGNI_HOST") or file_config.get("host")
+    token = os.environ.get("IGNI_TOKEN") or file_config.get("token")
     
     if not host:
-        print("Error: IGNI_HOST environment variable not set", file=sys.stderr)
+        print("Error: Gateway host not configured", file=sys.stderr)
+        print("Options:", file=sys.stderr)
+        print("  1. Set IGNI_HOST environment variable", file=sys.stderr)
+        print("  2. Add 'host' to config.json", file=sys.stderr)
         print("Example: export IGNI_HOST=http://localhost:8088", file=sys.stderr)
         sys.exit(1)
     
     if not token:
-        print("Error: IGNI_TOKEN environment variable not set", file=sys.stderr)
-        print("Example: export IGNI_TOKEN=your-api-token", file=sys.stderr)
+        print("Error: API token not configured", file=sys.stderr)
+        print("Options:", file=sys.stderr)
+        print("  1. Set IGNI_TOKEN environment variable", file=sys.stderr)
+        print("  2. Add 'token' to config.json", file=sys.stderr)
         print("Get token from: Gateway > Platform > Security > API Keys", file=sys.stderr)
         sys.exit(1)
     
