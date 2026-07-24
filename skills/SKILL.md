@@ -1,9 +1,9 @@
 ---
-name: ignition-skills-master
+name: ignition-perspective-skills
 description: Master routing skill for all Ignition skills including Perspective views and Tag management. Use this to determine which skill(s) to load for your current task. Do NOT load all skills — only load the relevant ones.
 ---
 
-# Ignition Skills Master
+# Ignition Perspective Skills
 
 ---
 
