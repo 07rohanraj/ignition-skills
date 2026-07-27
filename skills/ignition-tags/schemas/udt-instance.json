@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ignition UDT Instance",
+  "description": "JSON schema for Ignition UDT Instance based on actual project examples",
+  "type": "object",
+  "required": ["name", "tagType", "parameters", "typeId"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "UDT instance name (letters, digits, underscores, spaces, parentheses, single quotes, dashes, colons; <256 chars)"
+    },
+    "tagType": {
+      "type": "string",
+      "const": "UdtInstance",
+      "description": "Always 'UdtInstance' for UDT instances"
+    },
+    "typeId": {
+      "type": "string",
+      "description": "Path to the UDT definition this instance is based on"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Object containing parameter value overrides",
+      "additionalProperties": true
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether UDT instance is enabled"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether UDT instance is read-only"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Freeform documentation text"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Tooltip text shown on hover in visual components"
+    },
+    "historyEnabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag reports to Tag Historian"
+    },
+    "historyProvider": {
+      "type": "string",
+      "description": "Target Tag Historian data store"
+    },
+    "alarmEvalEnabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Determines if alarms will be evaluated on this tag"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "Motor1",
+      "tagType": "UdtInstance",
+      "typeId": "[.]MOTOR",
+      "parameters": {
+        "RPM": 1750,
+        "TEMPERATURE": 75.5,
+        "CURRENT": 10.2,
+        "VOLTAGE": 480,
+        "POWER": 5000,
+        "ENERGY": 0,
+        "FREQUENCY": 60,
+        "TORQUE": 20,
+        "VIBRATION": 0.5
+      },
+      "enabled": true,
+      "documentation": "Motor 1 instance",
+      "readOnly": false,
+      "historyEnabled": false,
+      "alarmEvalEnabled": true
+    }
+  ]
+}

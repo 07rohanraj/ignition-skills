@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ignition Tag Folder",
+  "description": "JSON schema for Ignition Tag Folder based on actual project examples",
+  "type": "object",
+  "required": ["name", "tagType"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Folder name (letters, digits, underscores, spaces, parentheses, single quotes, dashes, colons; <256 chars)"
+    },
+    "tagType": {
+      "type": "string",
+      "const": "Folder",
+      "description": "Always 'Folder' for folder tags"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether folder is enabled"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Freeform documentation text"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Array of child tags within this folder",
+      "items": {
+        "type": "object",
+        "description": "Any valid tag type (Folder, AtomicTag, UdtType, UdtInstance)"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "Equipment",
+      "tagType": "Folder",
+      "enabled": true,
+      "documentation": "Equipment folder",
+      "tags": []
+    },
+    {
+      "name": "Area 1",
+      "tagType": "Folder",
+      "enabled": true,
+      "documentation": "Area 1 folder",
+      "tags": []
+    }
+  ]
+}

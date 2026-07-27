@@ -197,12 +197,7 @@ description: Master routing skill for all Ignition skills including Perspective 
 
 | Skill ID | When to Use | File Path |
 |----------|-------------|-----------|
-| `ignition-tag-memory` | Creating memory tags (setpoints, internal values) | `ignition-tags/tag-types/Memory Tag.md` |
-| `ignition-tag-expression` | Creating expression tags (calculated values) | `ignition-tags/tag-types/Expression Tag.md` |
-| `ignition-tag-opc` | Creating OPC-UA tags (PLC data) | `ignition-tags/tag-types/OPC Tag.md` |
-| `ignition-tag-query` | Creating SQL query tags (database values) | `ignition-tags/tag-types/Query Tag.md` |
-| `ignition-tag-folder` | Creating tag folders (organization) | `ignition-tags/tag-types/Folder.md` |
-| `ignition-tag-udt` | Creating UDT definitions and instances | `ignition-tags/tag-types/UDT.md` |
+| `ignition-tags` | Creating, importing, and exporting tags via REST API | `ignition-tags/Tags.md` |
 
 ---
 
@@ -226,16 +221,16 @@ description: Master routing skill for all Ignition skills including Perspective 
 | Create docks/navigation | `perspective-docks` |
 | Embed sub-views | `perspective-embedded-view`, `perspective-flex-repeater` |
 | Display alarms | `perspective-alarm-status-table` / `perspective-alarm-journal-table` |
-| Create memory tags | `ignition-tag-memory` |
-| Create expression tags | `ignition-tag-expression` |
-| Create OPC tags from PLC | `ignition-tag-opc` |
-| Create SQL query tags | `ignition-tag-query` |
-| Create tag folders | `ignition-tag-folder` |
-| Create UDT definitions | `ignition-tag-udt` |
-| Create UDT instances | `ignition-tag-udt` |
-| Bulk create tags | `ignition-tag-udt`, `ignition-tag-opc` |
-| Export existing tags | `ignition-tags` (scripts/export-tags.py) |
-| Import tags | `ignition-tags` (scripts/import-tags.py) |
+| Create memory tags | `ignition-tags` |
+| Create expression tags | `ignition-tags` |
+| Create OPC tags from PLC | `ignition-tags` |
+| Create SQL query tags | `ignition-tags` |
+| Create tag folders | `ignition-tags` |
+| Create UDT definitions | `ignition-tags` |
+| Create UDT instances | `ignition-tags` |
+| Bulk create tags | `ignition-tags` |
+| Export existing tags | `ignition-tags` |
+| Import tags | `ignition-tags` |
 
 ---
 

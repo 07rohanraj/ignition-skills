@@ -2,6 +2,9 @@
 """
 Import tags to Ignition Gateway via REST API.
 
+This is a self-contained script that requires only the 'requests' library.
+No other local modules are needed.
+
 Usage:
     python import-tags.py --file tags.json
     python import-tags.py --file tags.json --provider default --path "Motors" --collision Overwrite
@@ -10,20 +13,29 @@ Configuration (priority: CLI args > env vars > config.json):
     config.json  - Config file (place in scripts/ or project root)
     IGNI_HOST    - Gateway URL (e.g., http://localhost:8088)
     IGNI_TOKEN   - API token from Gateway > Platform > Security > API Keys
+
+Requirements:
+    pip install requests
 """
 
 import os
 import sys
 import json
 import argparse
-import requests
+import subprocess
 from pathlib import Path
+
+try:
+    import requests
+except ImportError:
+    print("Error: 'requests' library not found. Installing...", file=sys.stderr)
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
+    import requests
 
 
 def load_config_file():
     """Load config from config.json file."""
-    # Look for config.json in script directory, then parent, then current working directory
-    script_dir = Path(__file__).parent.parent
+    script_dir = Path(__file__).parent
     search_paths = [
         script_dir / "config.json",
         script_dir.parent / "config.json",
@@ -47,10 +59,8 @@ def load_config_file():
 
 def get_config():
     """Get configuration from config file, environment variables, or defaults."""
-    # Load config file
     file_config = load_config_file()
     
-    # Priority: environment variables > config file
     host = os.environ.get("IGNI_HOST") or file_config.get("host")
     token = os.environ.get("IGNI_TOKEN") or file_config.get("token")
     
@@ -79,14 +89,13 @@ def validate_json(file_path):
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
         
-        # Basic structure validation
         if "tags" not in data:
             if "name" not in data:
                 print("Warning: JSON does not contain 'tags' array or 'name' field", file=sys.stderr)
-            # Single tag definition
             data = {"tags": [data]}
         
-        print(f"JSON validation passed: {len(data.get('tags', []))} tag(s) found")
+        tag_count = len(data.get("tags", []))
+        print(f"JSON validation passed: {tag_count} tag(s) found")
         return True, data
     except json.JSONDecodeError as e:
         print(f"JSON validation failed: {e}", file=sys.stderr)
@@ -97,32 +106,19 @@ def validate_json(file_path):
 
 
 def import_tags(host, token, file_path, provider="default", path="", collision_policy="Overwrite", dry_run=False):
-    """
-    Import tags to Ignition Gateway.
-    
-    Args:
-        host: Gateway URL
-        token: API token
-        file_path: Path to tag JSON file
-        provider: Tag provider name
-        path: Root path for import
-        collision_policy: One of Abort, Overwrite, Rename, Ignore, MergeOverwrite
-        dry_run: If True, only validate without importing
-    
-    Returns:
-        Response data or None on error
-    """
-    # Validate JSON first
+    """Import tags to Ignition Gateway."""
     is_valid, data = validate_json(file_path)
     if not is_valid:
         return None
     
     if dry_run:
         print("Dry run - would import:")
-        print(json.dumps(data, indent=2)[:500] + "..." if len(json.dumps(data)) > 500 else json.dumps(data, indent=2))
+        output = json.dumps(data, indent=2)
+        if len(output) > 500:
+            output = output[:500] + "..."
+        print(output)
         return {"status": "dry_run"}
     
-    # Build request
     url = f"{host}/data/api/v1/tags/import"
     params = {
         "provider": provider,
@@ -143,7 +139,7 @@ def import_tags(host, token, file_path, provider="default", path="", collision_p
             response = requests.post(url, params=params, headers=headers, data=f, timeout=30)
         
         if response.status_code == 200:
-            result = response.json()
+            result = response.json() if response.content else {"status": "ok"}
             print("Import successful!")
             if result:
                 print(f"Result: {json.dumps(result, indent=2)}")
@@ -201,24 +197,31 @@ Collision Policies:
     
     args = parser.parse_args()
     
-    # Validate only mode
     if args.validate_only:
         is_valid, data = validate_json(args.file)
         sys.exit(0 if is_valid else 1)
     
-    # Get config
-    host, token = get_config()
-    
-    # Import
-    result = import_tags(
-        host=host,
-        token=token,
-        file_path=args.file,
-        provider=args.provider,
-        path=args.path,
-        collision_policy=args.collision,
-        dry_run=args.dry_run
-    )
+    if args.dry_run:
+        result = import_tags(
+            host="",
+            token="",
+            file_path=args.file,
+            provider=args.provider,
+            path=args.path,
+            collision_policy=args.collision,
+            dry_run=True
+        )
+    else:
+        host, token = get_config()
+        result = import_tags(
+            host=host,
+            token=token,
+            file_path=args.file,
+            provider=args.provider,
+            path=args.path,
+            collision_policy=args.collision,
+            dry_run=False
+        )
     
     sys.exit(0 if result is not None else 1)
 

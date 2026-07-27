@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ignition Derived Tag",
+  "description": "JSON schema for Ignition Derived Tag based on actual project examples",
+  "type": "object",
+  "required": ["name", "tagType", "valueSource", "sourceTagPath"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Tag name (letters, digits, underscores, spaces, parentheses, single quotes, dashes, colons; <256 chars)"
+    },
+    "tagType": {
+      "type": "string",
+      "const": "AtomicTag",
+      "description": "Always 'AtomicTag' for derived tags"
+    },
+    "valueSource": {
+      "type": "string",
+      "const": "derived",
+      "description": "Always 'derived' for derived tags"
+    },
+    "sourceTagPath": {
+      "type": "string",
+      "description": "Path to the source tag this derived tag references"
+    },
+    "deriveExpressionGetter": {
+      "type": "string",
+      "description": "Expression to transform the source value on read"
+    },
+    "deriveExpressionSetter": {
+      "type": "string",
+      "description": "Expression to transform the written value before sending to source"
+    },
+    "preserveSourceTimestamp": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, use timestamp from source value"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether tag is evaluated by the Tag Group"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag is read-only"
+    },
+    "tagGroup": {
+      "type": "string",
+      "default": "Default",
+      "description": "Tag Group that will execute the tag"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Freeform documentation text"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Tooltip text shown on hover in visual components"
+    },
+    "historyEnabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag reports to Tag Historian"
+    },
+    "historyProvider": {
+      "type": "string",
+      "description": "Target Tag Historian data store"
+    },
+    "alarmEvalEnabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Determines if alarms will be evaluated on this tag"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "TemperatureMax",
+      "tagType": "AtomicTag",
+      "valueSource": "derived",
+      "sourceTagPath": "[.]Temperature",
+      "deriveExpressionGetter": "max({[.]Temperature}, {[.]TemperatureHigh})",
+      "enabled": true,
+      "documentation": "Maximum temperature derived tag",
+      "readOnly": false,
+      "tagGroup": "Default",
+      "historyEnabled": false,
+      "alarmEvalEnabled": true
+    }
+  ]
+}

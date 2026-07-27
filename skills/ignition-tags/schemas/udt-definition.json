@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ignition UDT Definition",
+  "description": "JSON schema for Ignition UDT Definition based on actual project examples",
+  "type": "object",
+  "required": ["name", "tagType", "parameters", "tags"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "UDT type name (letters, digits, underscores, spaces, parentheses, single quotes, dashes, colons; <256 chars)"
+    },
+    "tagType": {
+      "type": "string",
+      "const": "UdtType",
+      "description": "Always 'UdtType' for UDT definitions"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Object containing UDT parameter definitions",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["dataType"],
+        "properties": {
+          "dataType": {
+            "type": "string",
+            "enum": ["Integer", "Float", "Double", "String", "Boolean", "DateTime", "DataSet"],
+            "description": "Data type of the parameter"
+          },
+          "defaultValue": {
+            "description": "Default value for the parameter"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Array of child tags within this UDT definition",
+      "items": {
+        "type": "object",
+        "description": "Any valid tag type (Folder, AtomicTag, UdtType, UdtInstance)"
+      }
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether UDT is enabled"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Freeform documentation text"
+    },
+    "eventScripts": {
+      "type": "array",
+      "description": "Array of tag event scripts",
+      "items": {
+        "type": "object",
+        "required": ["eventid", "script"],
+        "properties": {
+          "eventid": {
+            "type": "string",
+            "enum": ["tagChanged", "startup", "shutdown"],
+            "description": "Event type"
+          },
+          "script": {
+            "type": "string",
+            "description": "Script content"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "MOTOR",
+      "tagType": "UdtType",
+      "parameters": {
+        "RPM": {
+          "dataType": "Integer"
+        },
+        "TEMPERATURE": {
+          "dataType": "Float"
+        },
+        "CURRENT": {
+          "dataType": "Float"
+        },
+        "VOLTAGE": {
+          "dataType": "Float"
+        },
+        "POWER": {
+          "dataType": "Float"
+        },
+        "ENERGY": {
+          "dataType": "Float"
+        },
+        "FREQUENCY": {
+          "dataType": "Float"
+        },
+        "TORQUE": {
+          "dataType": "Float"
+        },
+        "VIBRATION": {
+          "dataType": "Float"
+        }
+      },
+      "tags": [
+        {
+          "dataType": "Float4",
+          "historyEnabled": true,
+          "historyProvider": "EquipmentHealth",
+          "name": "CURRENT",
+          "opcItemPath": "ns=1;s=[EquipmentHealth]Motor/CURRENT",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        },
+        {
+          "dataType": "Int4",
+          "historyEnabled": true,
+          "historyProvider": "EquipmentHealth",
+          "name": "RPM",
+          "opcItemPath": "ns=1;s=[EquipmentHealth]Motor/RPM",
+          "opcServer": "Ignition OPC UA Server",
+          "tagType": "AtomicTag",
+          "valueSource": "opc"
+        }
+      ],
+      "enabled": true,
+      "documentation": "Motor UDT with parameters"
+    }
+  ]
+}

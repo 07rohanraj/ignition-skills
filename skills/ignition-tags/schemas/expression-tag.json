@@ -1,0 +1,190 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ignition Expression Tag",
+  "description": "JSON schema for Ignition Expression Tag based on actual project examples",
+  "type": "object",
+  "required": ["name", "tagType", "valueSource", "expression"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Tag name (letters, digits, underscores, spaces, parentheses, single quotes, dashes, colons; <256 chars)"
+    },
+    "tagType": {
+      "type": "string",
+      "const": "AtomicTag",
+      "description": "Always 'AtomicTag' for expression tags"
+    },
+    "valueSource": {
+      "type": "string",
+      "const": "expr",
+      "description": "Always 'expr' for expression tags"
+    },
+    "expression": {
+      "type": "string",
+      "description": "Expression that determines tag value"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether tag is evaluated by the Tag Group"
+    },
+    "dataType": {
+      "type": "string",
+      "enum": ["Int1", "Int2", "Int4", "Int8", "Float4", "Float8", "Boolean", "String", "DateTime", "DataSet"],
+      "description": "Data type of the tag"
+    },
+    "executionMode": {
+      "type": "string",
+      "enum": ["EventDriven", "FixedRate", "TagGroupRate"],
+      "default": "EventDriven",
+      "description": "When tag executes"
+    },
+    "executionRate": {
+      "type": "integer",
+      "description": "Execution rate in milliseconds (only for FixedRate mode)"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag is read-only"
+    },
+    "tagGroup": {
+      "type": "string",
+      "default": "Default",
+      "description": "Tag Group that will execute the tag"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Freeform documentation text"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Tooltip text shown on hover in visual components"
+    },
+    "engLow": {
+      "type": ["number", "null"],
+      "description": "Lowest expected value of the tag"
+    },
+    "engHigh": {
+      "type": ["number", "null"],
+      "description": "Highest expected value of the tag"
+    },
+    "engUnit": {
+      "type": "string",
+      "description": "Engineering units (e.g., 'degF', 'psi')"
+    },
+    "deadband": {
+      "type": "number",
+      "default": 0,
+      "description": "Value threshold to prevent unnecessary updates"
+    },
+    "deadbandMode": {
+      "type": "string",
+      "enum": ["Absolute", "Percent", "Off"],
+      "default": "Absolute",
+      "description": "How deadband is applied"
+    },
+    "formatString": {
+      "type": "string",
+      "description": "Numeric format pattern using # and 0 characters"
+    },
+    "historyEnabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag reports to Tag Historian"
+    },
+    "historyProvider": {
+      "type": "string",
+      "description": "Target Tag Historian data store"
+    },
+    "historicalDeadbandStyle": {
+      "type": "string",
+      "enum": ["Auto", "Analog", "Discrete"],
+      "description": "Historical deadband style"
+    },
+    "historicalDeadbandMode": {
+      "type": "string",
+      "enum": ["Absolute", "Percent", "Off"],
+      "description": "How historical deadband is applied"
+    },
+    "historicalDeadband": {
+      "type": "number",
+      "description": "Deadband for historical evaluation"
+    },
+    "sampleMode": {
+      "type": "string",
+      "enum": ["OnChange", "Periodic", "TagGroup"],
+      "description": "Collection trigger mode"
+    },
+    "historySampleRate": {
+      "type": "number",
+      "description": "Collection interval (Periodic mode)"
+    },
+    "historySampleRateUnits": {
+      "type": "string",
+      "enum": ["MS", "SEC", "MIN", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"],
+      "description": "Time unit for sample rate"
+    },
+    "historyTimeDeadband": {
+      "type": "number",
+      "description": "Minimum time between records"
+    },
+    "historyTimeDeadbandUnits": {
+      "type": "string",
+      "enum": ["MS", "SEC", "MIN", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"],
+      "description": "Time unit for min time between samples"
+    },
+    "historyMaxAge": {
+      "type": "number",
+      "description": "Maximum time between samples (0 disables)"
+    },
+    "historyMaxAgeUnits": {
+      "type": "string",
+      "enum": ["MS", "SEC", "MIN", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"],
+      "description": "Time unit for max time between samples"
+    },
+    "alarmEvalEnabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Determines if alarms will be evaluated on this tag"
+    },
+    "eventScripts": {
+      "type": "array",
+      "description": "Array of tag event scripts",
+      "items": {
+        "type": "object",
+        "required": ["eventid", "script"],
+        "properties": {
+          "eventid": {
+            "type": "string",
+            "enum": ["qualityChanged", "valueChanged", "alarmActive", "alarmCleared", "alarmAcked"],
+            "description": "Event type"
+          },
+          "script": {
+            "type": "string",
+            "description": "Script content"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "TemperatureC",
+      "tagType": "AtomicTag",
+      "valueSource": "expr",
+      "expression": "({[.]Temperature} - 32) * 5/9",
+      "enabled": true,
+      "dataType": "Float4",
+      "executionMode": "FixedRate",
+      "executionRate": 60000,
+      "documentation": "Temperature in Celsius",
+      "readOnly": false,
+      "tagGroup": "Default",
+      "engUnit": "degC",
+      "historyEnabled": false,
+      "alarmEvalEnabled": true
+    }
+  ]
+}

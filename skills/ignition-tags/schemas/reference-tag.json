@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ignition Reference Tag",
+  "description": "JSON schema for Ignition Reference Tag based on actual project examples",
+  "type": "object",
+  "required": ["name", "tagType", "valueSource", "sourceTagPath"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Tag name (letters, digits, underscores, spaces, parentheses, single quotes, dashes, colons; <256 chars)"
+    },
+    "tagType": {
+      "type": "string",
+      "const": "AtomicTag",
+      "description": "Always 'AtomicTag' for reference tags"
+    },
+    "valueSource": {
+      "type": "string",
+      "const": "reference",
+      "description": "Always 'reference' for reference tags"
+    },
+    "sourceTagPath": {
+      "type": "string",
+      "description": "Path to the tag this reference points to"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether tag is evaluated by the Tag Group"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag is read-only"
+    },
+    "tagGroup": {
+      "type": "string",
+      "default": "Default",
+      "description": "Tag Group that will execute the tag"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Freeform documentation text"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Tooltip text shown on hover in visual components"
+    },
+    "historyEnabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag reports to Tag Historian"
+    },
+    "historyProvider": {
+      "type": "string",
+      "description": "Target Tag Historian data store"
+    },
+    "alarmEvalEnabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Determines if alarms will be evaluated on this tag"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "Alias1",
+      "tagType": "AtomicTag",
+      "valueSource": "reference",
+      "sourceTagPath": "[.]Temperature",
+      "enabled": true,
+      "documentation": "Reference to another tag",
+      "readOnly": false,
+      "tagGroup": "Default",
+      "historyEnabled": false,
+      "alarmEvalEnabled": true
+    }
+  ]
+}
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "Alias1",
+      "tagType": "AtomicTag",
+      "valueSource": "reference",
+      "referenceTagPath": "[.]Temperature",
+      "enabled": true,
+      "documentation": "Reference to another tag",
+      "readOnly": false,
+      "tagGroup": "Default",
+      "historyEnabled": false,
+      "alarmEvalEnabled": true
+    },
+    {
+      "name": "IndirectAlias1",
+      "tagType": "AtomicTag",
+      "valueSource": "indirect",
+      "indirectTagPath": "[.]Area{Area}/Temperature",
+      "enabled": true,
+      "documentation": "Indirect reference to another tag",
+      "readOnly": false,
+      "tagGroup": "Default",
+      "historyEnabled": false,
+      "alarmEvalEnabled": true
+    }
+  ]
+}

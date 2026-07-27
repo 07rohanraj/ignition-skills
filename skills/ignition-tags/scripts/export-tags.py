@@ -2,6 +2,9 @@
 """
 Export tags from Ignition Gateway via REST API.
 
+This is a self-contained script that requires only the 'requests' library.
+No other local modules are needed.
+
 Usage:
     python export-tags.py --output tags.json
     python export-tags.py --provider default --path "Motors" --output motors.json
@@ -10,20 +13,29 @@ Configuration (priority: CLI args > env vars > config.json):
     config.json  - Config file (place in scripts/ or project root)
     IGNI_HOST    - Gateway URL (e.g., http://localhost:8088)
     IGNI_TOKEN   - API token from Gateway > Platform > Security > API Keys
+
+Requirements:
+    pip install requests
 """
 
 import os
 import sys
 import json
 import argparse
-import requests
+import subprocess
 from pathlib import Path
+
+try:
+    import requests
+except ImportError:
+    print("Error: 'requests' library not found. Installing...", file=sys.stderr)
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
+    import requests
 
 
 def load_config_file():
     """Load config from config.json file."""
-    # Look for config.json in script directory, then parent, then current working directory
-    script_dir = Path(__file__).parent.parent
+    script_dir = Path(__file__).parent
     search_paths = [
         script_dir / "config.json",
         script_dir.parent / "config.json",
@@ -47,10 +59,8 @@ def load_config_file():
 
 def get_config():
     """Get configuration from config file, environment variables, or defaults."""
-    # Load config file
     file_config = load_config_file()
     
-    # Priority: environment variables > config file
     host = os.environ.get("IGNI_HOST") or file_config.get("host")
     token = os.environ.get("IGNI_TOKEN") or file_config.get("token")
     
@@ -75,22 +85,7 @@ def get_config():
 
 def export_tags(host, token, provider="default", path="", output="exported-tags.json",
                 export_type="json", recursive=True, include_udts=True):
-    """
-    Export tags from Ignition Gateway.
-    
-    Args:
-        host: Gateway URL
-        token: API token
-        provider: Tag provider name
-        path: Root path to export
-        output: Output file path
-        export_type: "json" or "xml"
-        recursive: Export sub-folders
-        include_udts: Include UDT definitions
-    
-    Returns:
-        True on success, False on error
-    """
+    """Export tags from Ignition Gateway."""
     url = f"{host}/data/api/v1/tags/export"
     params = {
         "provider": provider,
@@ -114,7 +109,6 @@ def export_tags(host, token, provider="default", path="", output="exported-tags.
         response = requests.get(url, params=params, headers=headers, timeout=60)
         
         if response.status_code == 200:
-            # Save to file
             output_path = Path(output)
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -124,7 +118,6 @@ def export_tags(host, token, provider="default", path="", output="exported-tags.
             print(f"Export successful!")
             print(f"Saved to: {output_path.absolute()}")
             
-            # Show summary if JSON
             if export_type == "json":
                 try:
                     data = json.loads(response.content)
@@ -179,10 +172,8 @@ Examples:
     
     args = parser.parse_args()
     
-    # Get config
     host, token = get_config()
     
-    # Export
     success = export_tags(
         host=host,
         token=token,

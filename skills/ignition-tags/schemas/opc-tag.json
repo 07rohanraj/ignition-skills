@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ignition OPC Tag",
+  "description": "JSON schema for Ignition OPC Tag based on actual project examples",
+  "type": "object",
+  "required": ["name", "tagType", "valueSource", "opcServer", "opcItemPath"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Tag name (letters, digits, underscores, spaces, parentheses, single quotes, dashes, colons; <256 chars)"
+    },
+    "tagType": {
+      "type": "string",
+      "const": "AtomicTag",
+      "description": "Always 'AtomicTag' for OPC tags"
+    },
+    "valueSource": {
+      "type": "string",
+      "const": "opc",
+      "description": "Always 'opc' for OPC tags"
+    },
+    "opcServer": {
+      "type": "string",
+      "description": "OPC server connection name"
+    },
+    "opcItemPath": {
+      "type": "string",
+      "description": "Path to OPC node (supports {parameter} substitution)"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether tag is evaluated by the Tag Group"
+    },
+    "dataType": {
+      "type": "string",
+      "enum": ["Int1", "Int2", "Int4", "Int8", "Float4", "Float8", "Boolean", "String", "DateTime", "DataSet"],
+      "description": "Data type of the tag"
+    },
+    "readOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag is read-only"
+    },
+    "tagGroup": {
+      "type": "string",
+      "default": "Default",
+      "description": "Tag Group that will execute the tag"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Freeform documentation text"
+    },
+    "tooltip": {
+      "type": "string",
+      "description": "Tooltip text shown on hover in visual components"
+    },
+    "engLow": {
+      "type": ["number", "null"],
+      "description": "Lowest expected value of the tag"
+    },
+    "engHigh": {
+      "type": ["number", "null"],
+      "description": "Highest expected value of the tag"
+    },
+    "engUnit": {
+      "type": "string",
+      "description": "Engineering units (e.g., 'RPM', 'degF')"
+    },
+    "deadband": {
+      "type": "number",
+      "default": 0,
+      "description": "Value threshold to prevent unnecessary updates"
+    },
+    "deadbandMode": {
+      "type": "string",
+      "enum": ["Absolute", "Percent", "Off"],
+      "default": "Absolute",
+      "description": "How deadband is applied"
+    },
+    "formatString": {
+      "type": "string",
+      "description": "Numeric format pattern using # and 0 characters"
+    },
+    "historyEnabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tag reports to Tag Historian"
+    },
+    "historyProvider": {
+      "type": "string",
+      "description": "Target Tag Historian data store"
+    },
+    "historicalDeadbandStyle": {
+      "type": "string",
+      "enum": ["Auto", "Analog", "Discrete"],
+      "description": "Historical deadband style"
+    },
+    "historicalDeadbandMode": {
+      "type": "string",
+      "enum": ["Absolute", "Percent", "Off"],
+      "description": "How historical deadband is applied"
+    },
+    "historicalDeadband": {
+      "type": "number",
+      "description": "Deadband for historical evaluation"
+    },
+    "sampleMode": {
+      "type": "string",
+      "enum": ["OnChange", "Periodic", "TagGroup"],
+      "description": "Collection trigger mode"
+    },
+    "historySampleRate": {
+      "type": "number",
+      "description": "Collection interval (Periodic mode)"
+    },
+    "historySampleRateUnits": {
+      "type": "string",
+      "enum": ["MS", "SEC", "MIN", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"],
+      "description": "Time unit for sample rate"
+    },
+    "historyTimeDeadband": {
+      "type": "number",
+      "description": "Minimum time between records"
+    },
+    "historyTimeDeadbandUnits": {
+      "type": "string",
+      "enum": ["MS", "SEC", "MIN", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"],
+      "description": "Time unit for min time between samples"
+    },
+    "historyMaxAge": {
+      "type": "number",
+      "description": "Maximum time between samples (0 disables)"
+    },
+    "historyMaxAgeUnits": {
+      "type": "string",
+      "enum": ["MS", "SEC", "MIN", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"],
+      "description": "Time unit for max time between samples"
+    },
+    "alarmEvalEnabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Determines if alarms will be evaluated on this tag"
+    },
+    "eventScripts": {
+      "type": "array",
+      "description": "Array of tag event scripts",
+      "items": {
+        "type": "object",
+        "required": ["eventid", "script"],
+        "properties": {
+          "eventid": {
+            "type": "string",
+            "enum": ["qualityChanged", "valueChanged", "alarmActive", "alarmCleared", "alarmAcked"],
+            "description": "Event type"
+          },
+          "script": {
+            "type": "string",
+            "description": "Script content"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "Temperature",
+      "tagType": "AtomicTag",
+      "valueSource": "opc",
+      "opcServer": "Ignition OPC UA Server",
+      "opcItemPath": "[default]Motor/Speed",
+      "enabled": true,
+      "dataType": "Float4",
+      "documentation": "Testing OPC Tag",
+      "tooltip": "Generated for schema discovery",
+      "readOnly": false,
+      "tagGroup": "Default",
+      "historyEnabled": false,
+      "alarmEvalEnabled": true,
+      "engLow": 0,
+      "engHigh": 100,
+      "engUnit": "RPM",
+      "formatString": "#,##0.##",
+      "deadband": 0
+    }
+  ]
+}
