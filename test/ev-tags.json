@@ -1,0 +1,104 @@
+{
+  "tags": [
+    {
+      "name": "SW",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "FlashingFailures",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Int4",
+          "value": 2
+        },
+        {
+          "name": "FlashingAttempts",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Int4",
+          "value": 150
+        }
+      ]
+    },
+    {
+      "name": "Quality",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "TorqueComplianceRate",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Float8",
+          "value": 98.7
+        },
+        {
+          "name": "PaintRejectionRate",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Float8",
+          "value": 1.8
+        }
+      ]
+    },
+    {
+      "name": "Safety",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "Incidents",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Int4",
+          "value": 0
+        },
+        {
+          "name": "DaysWithoutIncident",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Int4",
+          "value": 45
+        }
+      ]
+    },
+    {
+      "name": "Inventory",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "RawMaterialLevel",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Float8",
+          "value": 85.2
+        },
+        {
+          "name": "FinishedGoodsCount",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Int4",
+          "value": 320
+        }
+      ]
+    },
+    {
+      "name": "Production",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "DailyOutput",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Int4",
+          "value": 1250
+        },
+        {
+          "name": "OEE",
+          "tagType": "AtomicTag",
+          "valueSource": "memory",
+          "dataType": "Float8",
+          "value": 87.5
+        }
+      ]
+    }
+  ]
+}

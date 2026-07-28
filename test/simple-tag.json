@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "tags": [
+    {
+      "name": "TestTag",
+      "tagType": "AtomicTag",
+      "valueSource": "memory",
+      "dataType": "Int4",
+      "value": 42
+    }
+  ]
+}
