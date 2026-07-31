@@ -9,23 +9,41 @@ description: Use this skill when the user asks about Gateway APIs, needs to find
 
 - `openapi.json` - Full OpenAPI specification for the Ignition Gateway (12MB)
 
+## Configuration
+
+API calls require Gateway host and token. Configuration is shared at project root:
+
+```
+ignition-skills/
+├── config.json          # Your config (gitignored)
+├── config.example.json  # Template
+```
+
+**Setup:**
+1. Copy `config.example.json` to `config.json`
+2. Add your Gateway host and API token
+3. Never commit `config.json` (it's gitignored)
+
+**Environment variables (alternative):**
+- `IGNI_HOST` - Gateway URL
+- `IGNI_TOKEN` - API token
+
 ## How to Use
 
 When the user asks about Gateway APIs, REST endpoints, or how to do something via the Gateway API:
 
-1. Search `openapi.json` using grep for the keyword (e.g., "tag", "alarm", "project")
-2. Read the relevant section to find the endpoint, method, and parameters
+1. Search `openapi.json` for the keyword to find relevant endpoints
+2. Read the matching section to get endpoint details (method, path, parameters)
 3. Provide the user with the API details
 
-## Quick Reference
+## Search Syntax
 
-```bash
-# Search for APIs
-grep -i "keyword" skills/ignition-openapi/openapi.json
-
-# Count total endpoints
-grep -c '"paths"' skills/ignition-openapi/openapi.json
+**PowerShell:**
+```powershell
+Select-String -Path "skills\ignition-openapi\openapi.json" -Pattern '"keyword' -CaseSensitive:$false
 ```
+
+**Read endpoint details:** Use the Read tool with offset to view the relevant lines.
 
 ## Common API Patterns
 

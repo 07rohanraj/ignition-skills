@@ -201,6 +201,14 @@ description: Master routing skill for all Ignition skills including Perspective 
 
 ---
 
+## Ignition Gateway API Discovery
+
+| Skill ID | When to Use | File Path |
+|----------|-------------|-----------|
+| `ignition-openapi` | Finding Gateway API endpoints, REST API reference | `ignition-openapi/SKILL.md` |
+
+---
+
 ## Quick Task Reference
 
 | Task | Load These Skills |
