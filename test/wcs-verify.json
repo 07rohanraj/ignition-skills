@@ -1,0 +1,669 @@
+{
+  "documentation": "Water Control System - centralized monitoring and control for water recirculation / tank farm installations",
+  "name": "WCS",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "documentation": "Site S00001",
+      "name": "S00001",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "documentation": "Tank farm for site S00001",
+          "name": "Tanks",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "enabled": true,
+              "name": "TK001",
+              "parameters": {
+                "SiteNo": {
+                  "dataType": "String",
+                  "value": "S00001"
+                },
+                "TankNo": {
+                  "dataType": "String",
+                  "value": "TK001"
+                }
+              },
+              "tagType": "UdtInstance",
+              "tags": [
+                {
+                  "name": "DieselJockeyPump",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "RunHours",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "NoOfStarts",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "RoomTemp1",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "TankTemp3",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "TankTemp1",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "DO",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "ElectricJockeyCmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpCmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage1Cmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ManualMode",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage3Cmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceEnable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage2Cmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyCmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "AutoMode",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "Stage3SetTemp",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "ElectricJockeyPump",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "NoOfStarts",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RunHours",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "RecirculationPump",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "RunHours",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "NoOfStarts",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "DI",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "RecircPumpFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage3On",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage1On",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOn",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelLow",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelHigh",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage2On",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "Alarms",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "ElectricJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelLow",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyOverload",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyOverload",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterOverTemp",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelHigh",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpOverload",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOpenCircuit",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "PB",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "HeaterStage3Enable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage2Enable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpStart",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterOn",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyStart",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage1Enable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOff",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "AutoModeSelect",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterOff",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "GlobalReset",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ManualModeSelect",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyStop",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpStop",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyStop",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOn",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "AlarmAck",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyStart",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "Stage2SetTemp",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "TankTemp2",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "TankLevel",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "Stage1SetTemp",
+                  "tagType": "AtomicTag"
+                }
+              ],
+              "typeId": "[default]_types_/WCS/TankSystem"
+            },
+            {
+              "enabled": true,
+              "name": "TK002",
+              "parameters": {
+                "SiteNo": {
+                  "dataType": "String",
+                  "value": "S00001"
+                },
+                "TankNo": {
+                  "dataType": "String",
+                  "value": "TK002"
+                }
+              },
+              "tagType": "UdtInstance",
+              "tags": [
+                {
+                  "name": "DI",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "RecircPumpFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage1On",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelHigh",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelLow",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage2On",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterRunning",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOn",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage3On",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterFault",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "RecirculationPump",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "RunHours",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "NoOfStarts",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "PB",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "HeaterOn",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage2Enable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyStart",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpStart",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "AlarmAck",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ManualModeSelect",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOn",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOff",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "GlobalReset",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage3Enable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "AutoModeSelect",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyStop",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterOff",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage1Enable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyStop",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpStop",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyStart",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "TankTemp3",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "ElectricJockeyPump",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "RunHours",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "NoOfStarts",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "Stage3SetTemp",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "DO",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "RecircPumpCmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceEnable",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage1Cmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyCmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage3Cmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterStage2Cmd",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "AutoMode",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ManualMode",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyCmd",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "Stage1SetTemp",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "RoomTemp1",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "Stage2SetTemp",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "TankTemp2",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "TankTemp1",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "TankLevel",
+                  "tagType": "AtomicTag"
+                },
+                {
+                  "name": "DieselJockeyPump",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "NoOfStarts",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RunHours",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                },
+                {
+                  "name": "Alarms",
+                  "tagType": "Folder",
+                  "tags": [
+                    {
+                      "name": "ElectricJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpOverload",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceOpenCircuit",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelHigh",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterOverTemp",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeaterFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "ElectricJockeyOverload",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "RecircPumpFault",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "TankLevelLow",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "DieselJockeyOverload",
+                      "tagType": "AtomicTag"
+                    },
+                    {
+                      "name": "HeatTraceFault",
+                      "tagType": "AtomicTag"
+                    }
+                  ]
+                }
+              ],
+              "typeId": "[default]_types_/WCS/TankSystem"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,663 @@
+{
+  "name": "WCS",
+  "tagType": "Folder",
+  "tags": [
+    {
+      "documentation": "Water recirculation tank system UDT. Parameters: SiteNo, TankNo.",
+      "enabled": true,
+      "name": "TankSystem",
+      "parameters": {
+        "SiteNo": {
+          "dataType": "String"
+        },
+        "TankNo": {
+          "dataType": "String"
+        }
+      },
+      "tagType": "UdtType",
+      "tags": [
+        {
+          "dataType": "Float8",
+          "engUnit": "degF",
+          "name": "TankTemp2",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        },
+        {
+          "dataType": "Float8",
+          "engUnit": "degF",
+          "name": "Stage1SetTemp",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        },
+        {
+          "dataType": "Float8",
+          "engUnit": "degF",
+          "name": "TankTemp3",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        },
+        {
+          "documentation": "Push-button command tags (MQTT publish commands)",
+          "name": "PB",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Boolean",
+              "name": "AlarmAck",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "GlobalReset",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterOn",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage1Enable",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "DieselJockeyStart",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "AutoModeSelect",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage2Enable",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeatTraceOn",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "RecircPumpStart",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage3Enable",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "ElectricJockeyStop",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "RecircPumpStop",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeatTraceOff",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterOff",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "ElectricJockeyStart",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "ManualModeSelect",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "DieselJockeyStop",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            }
+          ]
+        },
+        {
+          "documentation": "Digital inputs from field devices",
+          "name": "DI",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Boolean",
+              "name": "HeaterFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "ElectricJockeyRunning",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "DieselJockeyFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage2On",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "RecircPumpFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "TankLevelHigh",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage1On",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "ElectricJockeyFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "TankLevelLow",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterRunning",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeatTraceOn",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "RecircPumpRunning",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "DieselJockeyRunning",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage3On",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            }
+          ]
+        },
+        {
+          "name": "RecirculationPump",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Int4",
+              "historyEnabled": true,
+              "historyProvider": "EquipmentHealth",
+              "name": "NoOfStarts",
+              "tagType": "AtomicTag",
+              "value": 0,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Float8",
+              "engUnit": "hr",
+              "historyEnabled": true,
+              "historyProvider": "EquipmentHealth",
+              "name": "RunHours",
+              "tagType": "AtomicTag",
+              "value": 0.0,
+              "valueSource": "memory"
+            }
+          ]
+        },
+        {
+          "name": "ElectricJockeyPump",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Float8",
+              "engUnit": "hr",
+              "historyEnabled": true,
+              "historyProvider": "EquipmentHealth",
+              "name": "RunHours",
+              "tagType": "AtomicTag",
+              "value": 0.0,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Int4",
+              "historyEnabled": true,
+              "historyProvider": "EquipmentHealth",
+              "name": "NoOfStarts",
+              "tagType": "AtomicTag",
+              "value": 0,
+              "valueSource": "memory"
+            }
+          ]
+        },
+        {
+          "dataType": "Float8",
+          "engUnit": "degF",
+          "name": "Stage3SetTemp",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        },
+        {
+          "documentation": "Digital outputs to field devices",
+          "name": "DO",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Boolean",
+              "name": "HeatTraceEnable",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage2Cmd",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage3Cmd",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "DieselJockeyCmd",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "AutoMode",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "ManualMode",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "ElectricJockeyCmd",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "HeaterStage1Cmd",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Boolean",
+              "name": "RecircPumpCmd",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            }
+          ]
+        },
+        {
+          "dataType": "Float8",
+          "engUnit": "degF",
+          "name": "Stage2SetTemp",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        },
+        {
+          "dataType": "Float8",
+          "engHigh": 100.0,
+          "engLow": 0.0,
+          "engUnit": "%",
+          "name": "TankLevel",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        },
+        {
+          "dataType": "Float8",
+          "engUnit": "degF",
+          "name": "RoomTemp1",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        },
+        {
+          "documentation": "Alarm status tags with WhenTrue alarms",
+          "name": "Alarms",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Recirculation Pump Overload",
+                  "priority": "Critical"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "RecircPumpOverload",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Heat Trace Fault",
+                  "priority": "High"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "HeatTraceFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Heat Trace Open Circuit",
+                  "priority": "High"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "HeatTraceOpenCircuit",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Electric Jockey Pump Fault",
+                  "priority": "High"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "ElectricJockeyFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Heater Fault",
+                  "priority": "High"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "HeaterFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Heater Over Temperature",
+                  "priority": "Critical"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "HeaterOverTemp",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Tank Level Low",
+                  "priority": "Medium"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "TankLevelLow",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Diesel Jockey Pump Fault",
+                  "priority": "High"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "DieselJockeyFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Diesel Jockey Pump Overload",
+                  "priority": "Critical"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "DieselJockeyOverload",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Recirculation Pump Fault",
+                  "priority": "High"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "RecircPumpFault",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Electric Jockey Pump Overload",
+                  "priority": "Critical"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "ElectricJockeyOverload",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            },
+            {
+              "alarms": [
+                {
+                  "ackMode": "Manual",
+                  "enabled": true,
+                  "mode": "WhenTrue",
+                  "name": "Tank Level High",
+                  "priority": "Medium"
+                }
+              ],
+              "dataType": "Boolean",
+              "name": "TankLevelHigh",
+              "tagType": "AtomicTag",
+              "value": false,
+              "valueSource": "memory"
+            }
+          ]
+        },
+        {
+          "name": "DieselJockeyPump",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Int4",
+              "historyEnabled": true,
+              "historyProvider": "EquipmentHealth",
+              "name": "NoOfStarts",
+              "tagType": "AtomicTag",
+              "value": 0,
+              "valueSource": "memory"
+            },
+            {
+              "dataType": "Float8",
+              "engUnit": "hr",
+              "historyEnabled": true,
+              "historyProvider": "EquipmentHealth",
+              "name": "RunHours",
+              "tagType": "AtomicTag",
+              "value": 0.0,
+              "valueSource": "memory"
+            }
+          ]
+        },
+        {
+          "dataType": "Float8",
+          "engUnit": "degF",
+          "name": "TankTemp1",
+          "tagType": "AtomicTag",
+          "value": 0.0,
+          "valueSource": "memory"
+        }
+      ]
+    }
+  ]
+}
